@@ -15,21 +15,21 @@ const ArchiveDelete = props => {
 
   const confirmAction = text => window.confirm(text);
 
-  const removeDeleted = (id) => {
-    dispatch(Actions.removeAsset(id))
-  }
-
   const createAsset = () => {
     props.history.push(`./createasset`);
   };
 
   const deleteSelected = () => {
     if (confirmAction('Todos os itens selecionados serão excluídos!')) {
+      let items = filteredAssets;
       filteredAssets.forEach(item => {
         if (item.selected) {
-          deleteAsset(item._id, removeDeleted, user);
+          if (deleteAsset(item._id, user)){
+            items = items.filter(e => e._id !== item._id);
+          }
         };
-      });
+      });      
+      dispatch(Actions.setAssets(items));
     };
   };
   

@@ -25,7 +25,6 @@ const SearchForm = () => {
     let items = []
     if (filter) {
       const pattern = new RegExp(filter.trim(), "i");
-      console.log(searchBy);
       switch (searchBy) {
         case "Nome":
           items = allAssets.filter(item => item.name.match(pattern));

@@ -118,7 +118,7 @@ const getAssets = async (load, user) => {
         _id: 2,
         name: "Ativo 2",
         type: {
-          id: 1,
+          id: 2,
           description: "Britador de Mandíbula"
         },
         description: "BR 5030. Cap. alimentação 12 a 15 m³/h 30CV",
@@ -164,12 +164,11 @@ const getAssetById = async (id, user) => {
   }
 };
 
-const deleteAsset = async (id, remove, user) => {
+const deleteAsset = async (id, user) => {
   //let config = getConfig(user);
   try {
     //await API.delete(`/assets/${id}`, config);
     console.log(`Ativo removido. ID: ${id}`); 
-    remove(id);
     return true;
   } catch (error) {
     console.log("Erro ao deletar o erro: ", error);
