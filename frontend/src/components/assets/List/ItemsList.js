@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Item from "./ItemList";
 import { Table, Form, Pagination } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { Creators as Actions } from "../../store/ducks/asset";
+import { Creators as Actions } from "../../../store/ducks/asset";
 import { useSelector } from "react-redux";
 
 const Items = props => {

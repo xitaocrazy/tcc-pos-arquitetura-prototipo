@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Creators as Actions } from "../../store/ducks/asset";
+import { Creators as Actions } from "../../../store/ducks/asset";
 import { useSelector } from "react-redux";
-import { archiveAsset, deleteAsset } from "../../services/Api";
+import { deleteAsset } from "../../../services/Api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faArchive } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
 import { Button } from "react-bootstrap";
 
-const ArchiveDelete = () => { 
+const ArchiveDelete = props => { 
   const filteredAssets = useSelector(({ asset: { filteredAssets } }) => filteredAssets); 
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
@@ -19,14 +19,8 @@ const ArchiveDelete = () => {
     dispatch(Actions.removeAsset(id))
   }
 
-  const archiveSelected = () => {
-    if (confirmAction('Todos os itens selecionados serão arquivados!')) {
-      filteredAssets.forEach(item => {
-        if (item.selected) {
-          archiveAsset(item._id, removeDeleted, user);
-        };
-      });
-    };
+  const createAsset = () => {
+    props.history.push(`./createasset`);
   };
 
   const deleteSelected = () => {
@@ -41,19 +35,19 @@ const ArchiveDelete = () => {
   
   return (
     <>
-      <Button
-        variant="light"
-        className="mr-1"
-        onClick={archiveSelected}
+      <Button 
+        variant="light" 
+        className="mr-1" 
+        onClick={createAsset}
       >
-        <FontAwesomeIcon icon={faArchive} />{" "} {isMobile ? "" : "Arquivar"}
+        <FontAwesomeIcon icon={faPlus} />{" "} {isMobile ? "" : "Novo"}
       </Button>
       <Button 
         variant="light" 
         className="mr-1" 
         onClick={deleteSelected}
       >
-        <FontAwesomeIcon icon={faTrash} />{" "} {isMobile ? "" : "Apagar"}
+        <FontAwesomeIcon icon={faTrash} />{" "} {isMobile ? "" : "Excluir"}
       </Button>
     </>
   );

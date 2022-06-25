@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Badge } from "react-bootstrap";
-import { BackToHome } from "../BackToHome";
-import { Loading } from "../Loading";
-import { getAssetById, getUserById } from "../../services/Api";
+import { BackToHome } from "../../BackToHome";
+import { Loading } from "../../Loading";
+import { getAssetById, getUserById } from "../../../services/Api";
 import { useSelector } from "react-redux";
-import { formatDate } from "../../utils";
+import { formatDate } from "../../../utils";
 
 const AssetDetails = ({ history, match }) => {
   const user = useSelector(({ auth: { user } }) => user);

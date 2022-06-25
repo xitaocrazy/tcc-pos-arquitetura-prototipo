@@ -80,7 +80,6 @@ const Login = props => {
   useEffect(() => {
     if (isAuth) redirectToHome();
   }, [isAuth]); //eslint-disable-line
-  // Desabilitado o eslint pois não vou ficar especificamente a função redirectToHome 
 
   const cardSize = {
     width: "250px",

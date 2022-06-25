@@ -50,15 +50,11 @@ const getUserById = async (id, user) => {
   try {
     //const { data } = await API.get(`/users/${id}/detail`, config);
     //return data;
-    if (id === 12345){
-      return {
-        email: EMAIL,
-        name: NAME,
-        token: TOKEN
-      }
+    return {
+      email: EMAIL,
+      name: NAME,
+      token: TOKEN
     };
-    // eslint-disable-next-line no-throw-literal
-    throw "Usuário não encontrado";
   } catch (error) {
     console.log("Erro ao buscar os detalhes do usuario: ", error);
     return [];
@@ -89,10 +85,24 @@ const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
   }
 };
 
+const createNewAsset = async (name, type, description) => {
+  //let config = getConfig({});
+  try {
+    //const payLoad = `{"name": "${name}","type": "${type}","description": "${description}"}`;
+    //await API.post(`/assets`, payLoad, config); 
+    console.log(`Novo ativo cadastrado. Nome: ${name}, Tipo: ${type}, Descrição: ${description}`);   
+    return true;
+  } catch (error) {
+    console.log("Erro ao cadastrar novo ativo: ", error);
+    return false;
+  }
+};
+
 const getAssets = async (load, user) => {
   //let config = getConfig(user);
   try {
-    //const { data } = await API.get("/logs/", config);
+    //const { data } = await API.get("/assets/", config);
+    console.log("Buscando lista de ativos");  
     const data = [
       {
         _id: 1,
@@ -129,7 +139,8 @@ const getAssets = async (load, user) => {
 const getAssetById = async (id, user) => {
   //let config = getConfig(user);
   try {
-    //const { data } = await API.get(`/logs/${id}`, config);
+    //const { data } = await API.get(`/assets/${id}`, config);
+    console.log(`Buscando ativo por id. Id: ${id}`);  
     const data = {
       description: {
         title: "Isso é um exemplo",
@@ -156,7 +167,8 @@ const getAssetById = async (id, user) => {
 const deleteAsset = async (id, remove, user) => {
   //let config = getConfig(user);
   try {
-    //await API.delete(`/logs/${id}`, config);
+    //await API.delete(`/assets/${id}`, config);
+    console.log(`Ativo removido. ID: ${id}`); 
     remove(id);
     return true;
   } catch (error) {
@@ -165,24 +177,12 @@ const deleteAsset = async (id, remove, user) => {
   }
 };
 
-const archiveAsset = async (id, archive, user) => {
-  //let config = getConfig(user);
-  try {
-    //await API.put(`/logs/${id}/archive`, [], config);
-    //archive(id);
-    return true;
-  } catch (error) {
-    console.log("Erro ao arquivar o erro: ", error);
-    return false;
-  }
-};
-
 export {     
   createNewUser,
   getUserById,
   loginUser,
+  createNewAsset,
   getAssets,
   getAssetById,
-  deleteAsset,
-  archiveAsset, 
+  deleteAsset 
 };
