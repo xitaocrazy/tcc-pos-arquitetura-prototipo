@@ -142,11 +142,11 @@ const getMaintenanceProcedures = async (load, assetId, assetType, user) => {
 const deleteMaintenanceProcedure = async (id, user) => {
   //let config = getConfig(user);
   try {
-    //await API.delete(`/assets/${id}`, config);
+    //await API.delete(`/maintenaceprocedures/${id}`, config);
     console.log(`Procedimento de manutenção removido. ID: ${id}`); 
     return true;
   } catch (error) {
-    console.log("Erro ao deletar o procedimento: ", error);
+    console.log("Erro ao deletar o procedimento de manutenção: ", error);
     return false;
   }
 };
@@ -154,14 +154,29 @@ const deleteMaintenanceProcedure = async (id, user) => {
 const getMaintenanceHistory = async (load, assetId, user) => {
   //let config = getConfig(user);
   try {
-    //const { data } = await API.get(`/maintenanceprocedures?assetId=${assetId}&assetType=${assetType}`, config);
+    //const { data } = await API.get(`/maintenancehistory?assetId=${assetId}`, config);
     console.log(`Buscando histórico de procedimentos de manutenção do ativo. AssetId: ${assetId}`);
     let data = maintenanceHistory.filter(a => a.assetId + '' === assetId + '');
+    data.forEach(item => {
+      item.selected = false;
+    });
     load(data);
     return data;
   } catch (error) {
     console.log("Erro ao buscar histórico dos procedimentos de manutenção do ativo: ", error);
     return [];
+  }
+};
+
+const deleteMaintenanceHistory = async (id, user) => {
+  //let config = getConfig(user);
+  try {
+    //await API.delete(`/maintenancehistory/${id}`, config);
+    console.log(`Manutenção agendada removida. ID: ${id}`); 
+    return true;
+  } catch (error) {
+    console.log("Erro ao deletar o manutenção agendada: ", error);
+    return false;
   }
 };
 
@@ -174,5 +189,6 @@ export {
   deleteAsset,
   getMaintenanceProcedures,
   deleteMaintenanceProcedure,
-  getMaintenanceHistory
+  getMaintenanceHistory,
+  deleteMaintenanceHistory
 };

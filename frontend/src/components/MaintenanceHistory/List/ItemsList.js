@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Item from "./ItemList";
-import { Table, Pagination } from "react-bootstrap";
+import { Table, Form, Pagination } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { Creators as Actions } from "../../../store/ducks/maintenanceHistory";
 import { useSelector } from "react-redux";
 
 const Items = props => {
   const filteredMaintenanceHistory = useSelector(({ maintenanceHistory: { filteredMaintenanceHistory } }) => filteredMaintenanceHistory);
+  const dispatch = useDispatch();
 
+  const [selectAll, setSelectAll] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const [pages, setPages] = useState([]);
   const [activePageMaintenanceHistory, setActivePageMaintenanceHistory] = useState([]);
   const pageSize = 5;
+
+  useEffect(() => {
+    filteredMaintenanceHistory.forEach(item => {
+      item.selected = selectAll;      
+    });
+    let items = filteredMaintenanceHistory.filter(e => e);
+    dispatch(Actions.updateFilteredMaintenanceHistory(items));
+  }, [selectAll]);//eslint-disable-line
 
   const handlePageChange = (event, page) => {
     event.preventDefault();
@@ -46,6 +58,13 @@ const Items = props => {
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th>
+              <Form.Check
+                value={selectAll}
+                checked={selectAll}
+                onChange={e => setSelectAll(e.target.checked)}
+              />
+            </th>
             <th>Nome</th>
             <th>Descrição</th>
             <th>Agendado para</th>            
