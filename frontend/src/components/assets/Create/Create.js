@@ -3,15 +3,19 @@ import { Card, Form, Button } from "react-bootstrap";
 import { createNewAsset } from "../../../services/Api.js";
 import { FormControl } from "../../../components/FormControl";
 import { Link } from "react-router-dom";
+import { assetTypes } from "../../../utils/index"
+import SelectedList from "../../General/SelectedList";
 
 const CreateAsset = props => {
   const [validated, setValidated] = useState(false);
   const [assetName, setAssetName] = useState("");
   const [assetDescription, setDescription] = useState("");
-  const [assetType, setAssetType] = useState("");
+  const [assetType, setAssetType] = useState(0);
+
+  const changeType = assetType => setAssetType(assetType);
 
   const createAsset = async props => {
-    if (await createNewAsset(assetName, assetDescription, assetType)) {
+    if (await createNewAsset(assetName, assetType, assetDescription)) {
         redirect();
       }    
   };
@@ -38,8 +42,7 @@ const CreateAsset = props => {
 
     let actions = {
       "name": setAssetName,
-      "description": setDescription,
-      "type": setAssetType
+      "description": setDescription
     };
 
     actions[name](value);
@@ -54,7 +57,7 @@ const CreateAsset = props => {
     <div className="p-5 d-flex justify-content-center align-items-center">
       <Card style={cardSize}>
         <Card.Header>Novo Ativo</Card.Header>
-        <Card.Body>
+        <Card.Body>           
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Row>
               <FormControl
@@ -69,7 +72,7 @@ const CreateAsset = props => {
                 name="name"
                 goodFeedback="Nome válido!"
                 badFeedback="Nome inválido!"
-              />
+              />              
               <FormControl
                 controlId="descriptionValidation"
                 label="Descrição"
@@ -82,20 +85,20 @@ const CreateAsset = props => {
                 name="description"
                 goodFeedback="Descrição válida!"
                 badFeedback="Descrição inválida!"
-              />
-              <FormControl
-                controlId="typeValidation"
-                label="Tipo"
-                required="true"
-                type="text"
-                placeholder="-"
-                value={assetType}
-                onChange={handleChange}
-                name="type"
-                goodFeedback="Tipo válido!"
-                badFeedback="Tipo inválido!"
-              />
+              />                          
+            </Form.Row>  
+            <Form.Row>
+              Tipo
             </Form.Row>
+            <Form.Row>              
+              <SelectedList
+                title="Tipo de ativo"
+                options={assetTypes}
+                handleChange={changeType}
+                classname="p2 pr-1"
+              />
+            </Form.Row>  
+            <p></p>                    
             <div className="d-flex justify-content-between align-items-end">
               <Button type="submit">Salvar</Button>
               <Link to={"./"}>Voltar</Link>

@@ -5,10 +5,7 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SelectedList from "../../General/SelectedList";
-import {
-  Button,
-  FormControl,
-  Form
+import { Button, FormControl, Form
 } from "react-bootstrap";
 
 const SearchForm = () => {
@@ -26,13 +23,13 @@ const SearchForm = () => {
     if (filter) {
       const pattern = new RegExp(filter.trim(), "i");
       switch (searchBy) {
-        case "Nome":
+        case "2":
           items = allAssets.filter(item => item.name.match(pattern));
           break;
-        case "Descrição":
+        case "4":
           items = allAssets.filter(item => item.description.match(pattern));
           break;
-        case "Tipo":
+        case "3":
           items = allAssets.filter(item => item.type && item.type.description.match(pattern));
           break;
         default:
@@ -61,11 +58,30 @@ const SearchForm = () => {
     setFiltro(event.target.value);
   };
 
+  const options = [
+    {
+      Description: "Todos",
+      Value: "1"
+    },
+    {
+      Description: "Nome",
+      Value: "2"
+    },
+    {
+      Description: "Tipo",
+      Value: "3"
+    },
+    {
+      Description: "Descrição",
+      Value: "4"
+    }
+  ];
+
   return (
     <div className="d-flex flex-row">
       <SelectedList
         title="Buscar"
-        options={["Todos", "Nome", "Tipo", "Descrição"]}
+        options={options}
         handleChange={changeSearchBy}
         classname="p2 pr-1"
       />

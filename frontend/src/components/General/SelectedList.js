@@ -6,14 +6,15 @@ const SelectedList = props => {
   const [title, setTitle] = useState(props.title);
 
   const options = props.options.map((elem, idx) => (
-    <Dropdown.Item eventKey={elem} key={idx}>
-      {elem}
+    <Dropdown.Item eventKey={elem.Value} key={idx}>
+      {elem.Description}
     </Dropdown.Item>
   ));
 
   const handleChange = value => {
-    setTitle(value)
-    props.handleChange(value)
+    var elem = props.options.filter(option => option.Value === value)[0];
+    setTitle(elem.Description)
+    props.handleChange(elem.Value)
   }
 
   return (
@@ -24,7 +25,7 @@ const SelectedList = props => {
       onSelect={value => handleChange(value)}
       className={props.classname}
     >
-      <Dropdown.Toggle variant="primary">{title}</Dropdown.Toggle>
+      <Dropdown.Toggle variant="secondary">{title}</Dropdown.Toggle>
       <Dropdown.Menu>{options}</Dropdown.Menu>
     </Dropdown>
   );

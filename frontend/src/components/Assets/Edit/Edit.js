@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { editExistingAsset } from "../../../services/Api.js";
 import { FormControl } from "../../FormControl";
 import { Link } from "react-router-dom";
+import { assetTypes } from "../../../utils/index";
+import SelectedList from "../../General/SelectedList";
 
 const EditAsset = ({ history, match }) => {
   const user = useSelector(({ auth: { user } }) => user);
@@ -14,8 +16,10 @@ const EditAsset = ({ history, match }) => {
   const [assetId, setAssetId] = useState("");
   const [assetName, setAssetName] = useState("");
   const [assetDescription, setDescription] = useState("");
-  const [assetType, setAssetType] = useState("");
+  const [assetType, setAssetType] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  const changeType = assetType => setAssetType(assetType);
 
   const getItemById = async () => {
     setIsLoading(true);
@@ -35,7 +39,7 @@ const EditAsset = ({ history, match }) => {
   }, []);//eslint-disable-line
 
   const editAsset = async props => {
-    if (await editExistingAsset(assetId, assetName, assetDescription, assetType)) {
+    if (await editExistingAsset(assetId, assetName, assetType, assetDescription)) {
         redirect();
       }    
   };
@@ -62,8 +66,7 @@ const EditAsset = ({ history, match }) => {
 
     let actions = {
       "name": setAssetName,
-      "description": setDescription,
-      "type": setAssetType
+      "description": setDescription
     };
 
     actions[name](value);
@@ -85,8 +88,8 @@ const EditAsset = ({ history, match }) => {
         <div className="p-5 d-flex justify-content-center align-items-center">
           <Card style={cardSize}>
             <Card.Header>Novo Ativo</Card.Header>
-            <Card.Body>
-              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Card.Body>              
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>               
                 <Form.Row>
                   <Form.Control
                     label="Id"
@@ -121,20 +124,20 @@ const EditAsset = ({ history, match }) => {
                     name="description"
                     goodFeedback="Descrição válida!"
                     badFeedback="Descrição inválida!"
-                  />
-                  <FormControl
-                    controlId="typeValidation"
-                    label="Tipo"
-                    required="true"
-                    type="text"
-                    placeholder="-"
-                    value={assetType}
-                    onChange={handleChange}
-                    name="type"
-                    goodFeedback="Tipo válido!"
-                    badFeedback="Tipo inválido!"
-                  />
+                  />               
                 </Form.Row>
+                <Form.Row>
+                  Tipo
+                </Form.Row>
+                <Form.Row>
+                  <SelectedList
+                    title="Tipo de ativo"
+                    options={assetTypes}
+                    handleChange={changeType}
+                    classname="p2 pr-1"
+                  />
+                </Form.Row> 
+                <p></p>
                 <div className="d-flex justify-content-between align-items-end">
                   <Button type="submit">Salvar</Button>
                   <Link to={"../"}>Voltar</Link>

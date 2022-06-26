@@ -21,3 +21,14 @@ export const formatDate = dateString => {
       .padStart(2, "0");
   return `${day}/${month}/${date && date.getFullYear()} ${hour}:${minute}`;
 };
+
+export const assetTypes = [
+  {
+    Description: "Alimentador Vibratório",
+    Value: "1"
+  },
+  {
+    Description: "Britador de Mandíbula",
+    Value: "2"
+  }
+];
