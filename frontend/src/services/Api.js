@@ -142,20 +142,14 @@ const getAssetById = async (id, user) => {
     //const { data } = await API.get(`/assets/${id}`, config);
     console.log(`Buscando ativo por id. Id: ${id}`);  
     const data = {
-      description: {
-        title: "Isso é um exemplo",
-        stacktrace: "Não tem"
-      },
-      lastOccurrence: {
-        date: new Date(),
-        user: "xitaocrazy"
-      },
-      origin: "development",
-      occurrences: 0,
-      level: "",
-      selected: true,
       _id: 1,
-      environment: "development"
+      name: "Ativo 1",
+      type: {
+        id: 1,
+        description: "Alimentador Vibratório"
+      },
+      description: "BR AV 25 050 Cap. alimentação 10 a 80 m³/h mototr 1 x 5 CV",
+      maintenanceProcedures: 3
     };
     return data;
   } catch (error) {

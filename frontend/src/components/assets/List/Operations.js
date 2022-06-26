@@ -8,7 +8,7 @@ import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { isMobile } from "react-device-detect";
 import { Button } from "react-bootstrap";
 
-const ArchiveDelete = props => { 
+const Operations = props => { 
   const filteredAssets = useSelector(({ asset: { filteredAssets } }) => filteredAssets); 
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
@@ -53,4 +53,4 @@ const ArchiveDelete = props => {
   );
 }
 
-export default ArchiveDelete;
+export default Operations;
