@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SelectedList from "../../General/SelectedList";
-import { Button, FormControl, Form
-} from "react-bootstrap";
+import { Button, FormControl, Form } from "react-bootstrap";
 
 const SearchForm = () => {
 

@@ -13,6 +13,7 @@ const FormControl = props => (
       {...(props.autoFocus === "true" && { autoFocus: true })}
       name={props.name}
       {...((props.textInValidated || props.notAutorized) && { isInvalid: true })}
+      {...(props.readOnly === "true" && { readOnly: true })}
     />
     { (props.notAutorized) ? 
       <Form.Control.Feedback type="invalid">

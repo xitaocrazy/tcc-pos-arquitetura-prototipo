@@ -6,7 +6,6 @@ import { setUser, setUserFromStorage } from "../../services/Auth";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../store/ducks/auth";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 const Login = props => {
   const [validated, setValidated] = useState(false);

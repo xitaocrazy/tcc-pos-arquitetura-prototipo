@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Card, Form, Button } from "react-bootstrap";
+import { ButtonGroup, Card, Form, Button } from "react-bootstrap";
 import { createNewAsset } from "../../../services/Api.js";
 import { FormControl } from "../../../components/FormControl";
 import { Link } from "react-router-dom";
 import { assetTypes } from "../../../utils/index"
 import SelectedList from "../../General/SelectedList";
+import { BackToHome } from "../../BackToHome";
 
 const CreateAsset = props => {
   const [validated, setValidated] = useState(false);
@@ -49,17 +50,31 @@ const CreateAsset = props => {
   };
 
   const cardSize = {
-    width: "250px",
-    minWidth: "250px"
+    width: "100%",
+    minWidth: "100%"
   };
 
   return (
-    <div className="p-5 d-flex justify-content-center align-items-center">
-      <Card style={cardSize}>
-        <Card.Header>Novo Ativo</Card.Header>
-        <Card.Body>           
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Form.Row>
+    <div className="m-3 p-4">
+      <ButtonGroup className="mb-3">
+        <BackToHome history={props.history} message="Voltar para lista" />
+      </ButtonGroup>
+      <div className="mb-3 justify-content-center align-items-center">
+        <Card style={cardSize}>
+          <Card.Header>Novo Ativo</Card.Header>
+          <Card.Body>           
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              <Form.Row>
+                <Form.Group controlId="tipoValidation">
+                  <Form.Label>Tipo</Form.Label>                    
+                  <SelectedList
+                    title="Tipo de ativo"
+                    options={assetTypes}
+                    handleChange={changeType}
+                    classname="p2 pr-1"
+                  />
+                </Form.Group>                    
+              </Form.Row>
               <FormControl
                 controlId="nomeValidation"
                 label="Nome"
@@ -85,28 +100,15 @@ const CreateAsset = props => {
                 name="description"
                 goodFeedback="Descrição válida!"
                 badFeedback="Descrição inválida!"
-              />                          
-            </Form.Row>  
-            <Form.Row>
-              Tipo
-            </Form.Row>
-            <Form.Row>              
-              <SelectedList
-                title="Tipo de ativo"
-                options={assetTypes}
-                handleChange={changeType}
-                classname="p2 pr-1"
-              />
-            </Form.Row>  
-            <p></p>                    
-            <div className="d-flex justify-content-between align-items-end">
-              <Button type="submit">Salvar</Button>
-              <Link to={"./"}>Voltar</Link>
-            </div>
-          </Form>
-        </Card.Body>
-      </Card>
-    </div>
+              />                   
+              <div className="d-flex justify-content-between align-items-end">
+                <Button type="submit">Salvar</Button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
+    </div>    
   );
 };
 

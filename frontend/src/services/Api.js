@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
+import { assetsList, maintenanceProcedures } from "../utils/index";
 
 const INVALID_EMAIL = "invalidemail@gmail.com";
 const EMAIL = "xitaocrazy@hotmail.com";
@@ -27,38 +28,6 @@ const getConfig = (user) => {
     }
   };
   return config;
-};
-
-const createNewUser = async (name, email, password) => {
-  //let config = getConfig({});
-  try {
-    //const payLoad = `{"name": "${name}","email": "${email}","password": "${password}"}`;
-    //await API.post(`/users`, payLoad, config);
-    if (email === INVALID_EMAIL) {
-      // eslint-disable-next-line no-throw-literal
-      throw "Usuário inválido";
-    };
-    return true;
-  } catch (error) {
-    console.log("Erro ao cadastrar novo usuário: ", error);
-    return false;
-  }
-};
-
-const getUserById = async (id, user) => {
-  //let config = getConfig(user);
-  try {
-    //const { data } = await API.get(`/users/${id}/detail`, config);
-    //return data;
-    return {
-      email: EMAIL,
-      name: NAME,
-      token: TOKEN
-    };
-  } catch (error) {
-    console.log("Erro ao buscar os detalhes do usuario: ", error);
-    return [];
-  }
 };
 
 const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
@@ -102,7 +71,7 @@ const editExistingAsset = async (id, name, type, description) => {
   //let config = getConfig({});
   try {
     //const payLoad = `{"id": "${id}","name": "${name}","type": "${type}","description": "${description}"}`;
-    //await API.post(`/assets`, payLoad, config); 
+    //await API.put(`/assets`, payLoad, config); 
     console.log(`Ativo alterado. ID: ${id}, Nome: ${name}, Tipo: ${type}, Descrição: ${description}`);   
     return true;
   } catch (error) {
@@ -116,28 +85,7 @@ const getAssets = async (load, user) => {
   try {
     //const { data } = await API.get("/assets/", config);
     console.log("Buscando lista de ativos");  
-    const data = [
-      {
-        _id: 1,
-        name: "Ativo 1",
-        type: {
-          id: 1,
-          description: "Alimentador Vibratório"
-        },
-        description: "BR AV 25 050 Cap. alimentação 10 a 80 m³/h mototr 1 x 5 CV",
-        maintenanceProcedures: 3
-      },
-      {
-        _id: 2,
-        name: "Ativo 2",
-        type: {
-          id: 2,
-          description: "Britador de Mandíbula"
-        },
-        description: "BR 5030. Cap. alimentação 12 a 15 m³/h 30CV",
-        maintenanceProcedures: 5
-      }
-    ];
+    let data = assetsList;
     data.forEach(item => {
       item.selected = false;
     });
@@ -153,20 +101,11 @@ const getAssetById = async (id, user) => {
   //let config = getConfig(user);
   try {
     //const { data } = await API.get(`/assets/${id}`, config);
-    console.log(`Buscando ativo por id. Id: ${id}`);  
-    const data = {
-      _id: 1,
-      name: "Ativo 1",
-      type: {
-        id: 1,
-        description: "Alimentador Vibratório"
-      },
-      description: "BR AV 25 050 Cap. alimentação 10 a 80 m³/h mototr 1 x 5 CV",
-      maintenanceProcedures: 3
-    };
+    console.log(`Buscando ativo por id. Id: ${id}`);
+    let data = assetsList.find(a => a._id + '' === id + '');    
     return data;
   } catch (error) {
-    console.log("Erro ao buscar os detalhes do erro: ", error);
+    console.log("Erro ao buscar os detalhes do ativo: ", error);
     return [];
   }
 };
@@ -178,18 +117,47 @@ const deleteAsset = async (id, user) => {
     console.log(`Ativo removido. ID: ${id}`); 
     return true;
   } catch (error) {
-    console.log("Erro ao deletar o erro: ", error);
+    console.log("Erro ao deletar o ativo: ", error);
+    return false;
+  }
+};
+
+const getAssetMaintenanceProcedures = async (load, assetId, assetType, user) => {
+  //let config = getConfig(user);
+  try {
+    //const { data } = await API.get(`/maintenanceprocedures?assetId=${assetId}&assetType=${assetType}`, config);
+    console.log(`Buscando procedimentos de manutenção do ativo. AssetId: ${assetId}, AssetType: ${assetType}`);
+    let data = maintenanceProcedures.filter(a => a.assetId + '' === assetId + '' || a.assetType + '' === assetType + '');
+    data.forEach(item => {
+      item.selected = false;
+    });
+    load(data);
+    return data;
+  } catch (error) {
+    console.log("Erro ao buscar os procedimentos de manutenção do ativo: ", error);
+    return [];
+  }
+};
+
+const deleteMaintenanceProcedure = async (id, user) => {
+  //let config = getConfig(user);
+  try {
+    //await API.delete(`/assets/${id}`, config);
+    console.log(`Procedimento de manutenção removido. ID: ${id}`); 
+    return true;
+  } catch (error) {
+    console.log("Erro ao deletar o procedimento: ", error);
     return false;
   }
 };
 
 export {     
-  createNewUser,
-  getUserById,
   loginUser,
   createNewAsset,
   editExistingAsset,
   getAssets,
   getAssetById,
-  deleteAsset 
+  deleteAsset,
+  getAssetMaintenanceProcedures,
+  deleteMaintenanceProcedure
 };

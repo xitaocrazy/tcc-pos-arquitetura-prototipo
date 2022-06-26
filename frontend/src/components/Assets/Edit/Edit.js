@@ -6,8 +6,8 @@ import { getAssetById } from "../../../services/Api";
 import { useSelector } from "react-redux";
 import { editExistingAsset } from "../../../services/Api.js";
 import { FormControl } from "../../FormControl";
-import { Link } from "react-router-dom";
 import { assetTypes } from "../../../utils/index";
+import { List } from "../../MaintenanceProcedures/List";
 import SelectedList from "../../General/SelectedList";
 
 const EditAsset = ({ history, match }) => {
@@ -26,11 +26,12 @@ const EditAsset = ({ history, match }) => {
     let data = await getAssetById(match.params.id, user);
     if (data.length === 0) {
       redirect();
-    }      
+    } 
     setAssetId(data._id);
     setAssetName(data.name);
     setDescription(data.description);
-    setAssetType(data.type.description);
+    setAssetType(data.type.id);
+    setDescription(data.type.description);
     setIsLoading(false);
   };
 
@@ -73,8 +74,8 @@ const EditAsset = ({ history, match }) => {
   };
 
   const cardSize = {
-    width: "250px",
-    minWidth: "250px"
+    width: "100%",
+    minWidth: "100%"
   };
 
   return (
@@ -85,67 +86,70 @@ const EditAsset = ({ history, match }) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="p-5 d-flex justify-content-center align-items-center">
+        <div className="mb-3 justify-content-center align-items-center">
           <Card style={cardSize}>
             <Card.Header>Novo Ativo</Card.Header>
             <Card.Body>              
               <Form noValidate validated={validated} onSubmit={handleSubmit}>               
                 <Form.Row>
-                  <Form.Control
+                  <FormControl
                     label="Id"
                     type="text"
                     placeholder="-"
                     value={assetId}
                     name="id"
-                    readOnly
+                    readOnly="true"
                   />
-                  <FormControl
-                    controlId="nomeValidation"
-                    label="Nome"
-                    required="true"
-                    type="text"
-                    placeholder="Nome"
-                    value={assetName}
-                    onChange={handleChange}
-                    autoFocus="true"
-                    name="name"
-                    goodFeedback="Nome válido!"
-                    badFeedback="Nome inválido!"
-                  />
-                  <FormControl
-                    controlId="descriptionValidation"
-                    label="Descrição"
-                    required="true"
-                    type="text"
-                    placeholder="Detalhes do ativo"
-                    value={assetDescription}
-                    onChange={handleChange}
-                    autoFocus="false"
-                    name="description"
-                    goodFeedback="Descrição válida!"
-                    badFeedback="Descrição inválida!"
-                  />               
+                  <Form.Group controlId="tipoValidation">
+                    <Form.Label>Tipo</Form.Label>                    
+                    <SelectedList
+                      title="Tipo de ativo"
+                      options={assetTypes}
+                      handleChange={changeType}
+                      classname="p2 pr-1"
+                    />
+                  </Form.Group>                    
                 </Form.Row>
-                <Form.Row>
-                  Tipo
-                </Form.Row>
-                <Form.Row>
-                  <SelectedList
-                    title="Tipo de ativo"
-                    options={assetTypes}
-                    handleChange={changeType}
-                    classname="p2 pr-1"
-                  />
-                </Form.Row> 
-                <p></p>
+                <FormControl
+                  controlId="nomeValidation"
+                  label="Nome"
+                  required="true"
+                  type="text"
+                  placeholder="Nome"
+                  value={assetName}
+                  onChange={handleChange}
+                  autoFocus="true"
+                  name="name"
+                  goodFeedback="Nome válido!"
+                  badFeedback="Nome inválido!"
+                />
+                <FormControl
+                  controlId="descriptionValidation"
+                  label="Descrição"
+                  required="true"
+                  type="text"
+                  placeholder="Detalhes do ativo"
+                  value={assetDescription}
+                  onChange={handleChange}
+                  autoFocus="false"
+                  name="description"
+                  goodFeedback="Descrição válida!"
+                  badFeedback="Descrição inválida!"
+                />
                 <div className="d-flex justify-content-between align-items-end">
                   <Button type="submit">Salvar</Button>
-                  <Link to={"../"}>Voltar</Link>
                 </div>
               </Form>
             </Card.Body>
           </Card>
-        </div>
+          <br></br>
+          <Card style={cardSize}>
+            <Card.Header>Procedimentos de Manutenção</Card.Header>
+            <Card.Body>              
+              <List history={history} assetId={assetId} assetType={assetType} isMaintenanceManagement={false}/>
+            </Card.Body>
+          </Card>          
+        </div>      
       )}
     </div>
   );

@@ -43,7 +43,7 @@ const Item = props => {
       <td onClick={goToAssetPage} className="" style={{wordBreak: "break-all"}}>
         <div>{props.item.description}</div>
       </td>
-      <td onClick={goToAssetPage}>{props.item.maintenanceProcedures}</td>
+      <td onClick={goToAssetPage}>{props.item.maintenanceProcedures.count}</td>
     </tr>
   );
 };
