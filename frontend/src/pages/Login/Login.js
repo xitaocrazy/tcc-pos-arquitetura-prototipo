@@ -123,7 +123,6 @@ const Login = props => {
             </Form.Row>
             <div className="d-flex justify-content-between align-items-end">
               <Button type="submit">Login</Button>
-              <Link to={"./signup"}>Cadastrar</Link>
             </div>
           </Form>
         </Card.Body>

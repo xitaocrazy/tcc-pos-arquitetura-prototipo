@@ -43,7 +43,6 @@ const UserMenu = () => {
         ) : (
           <div className="d-flex flex-column">
             <Link to={"./login"} className="px-4 p-2">Login</Link>
-            <Link to={"./signup"} className="px-4 p-2">Cadastro</Link>
           </div>
         )}
       </NavDropdown>

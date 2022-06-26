@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
-import { SignUp } from "../pages/SignUp";
 import { AssetDetails } from "../components/assets/AssetDetails";
 import { CreateAsset } from "../components/assets/Create";
 import { NotFound } from "../pages/NotFound";
@@ -35,7 +34,6 @@ const Routes = () => (
       <PrivateRoute exact path="/asset-details/:id" component={AssetDetails}></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
-      <Route exact path="/signup" component={SignUp}></Route>
       <Route exact path="/createasset" component={CreateAsset}></Route>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>      
     </Switch>
