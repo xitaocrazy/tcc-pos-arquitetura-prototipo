@@ -22,7 +22,7 @@ const Item = props => {
   };
 
   const goToAssetPage = () => {
-    props.history.push(`./asset-details/${props.item._id}`);
+    props.history.push(`./details/${props.item._id}`);
   };
 
   return (

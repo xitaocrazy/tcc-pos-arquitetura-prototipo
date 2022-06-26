@@ -2,8 +2,8 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
-import { AssetDetails } from "../components/assets/AssetDetails";
-import { CreateAsset } from "../components/assets/Create";
+import { EditAsset } from "../components/Assets/Edit";
+import { CreateAsset } from "../components/Assets/Create";
 import { NotFound } from "../pages/NotFound";
 import { useSelector } from "react-redux";
 
@@ -30,8 +30,8 @@ const Routes = () => (
   <>
     <Switch>
       <PrivateRoute exact path="/" component={Home}></PrivateRoute>
-      <Route exact path="/asset-details/login" render={() => <Redirect to="/login" />}></Route>
-      <PrivateRoute exact path="/asset-details/:id" component={AssetDetails}></PrivateRoute>
+      <Route exact path="/details/login" render={() => <Redirect to="/login" />}></Route>
+      <PrivateRoute exact path="/details/:id" component={EditAsset}></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
       <Route exact path="/createasset" component={CreateAsset}></Route>

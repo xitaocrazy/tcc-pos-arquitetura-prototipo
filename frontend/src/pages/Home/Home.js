@@ -1,5 +1,5 @@
 import React from "react";
-import { List } from "../../components/assets/List";
+import { List } from "../../components/Assets/List";
 
 const Home = ({ history }) => <List history={history} />;
 

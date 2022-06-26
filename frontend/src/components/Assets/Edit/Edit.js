@@ -5,10 +5,10 @@ import { Loading } from "../../Loading";
 import { getAssetById } from "../../../services/Api";
 import { useSelector } from "react-redux";
 import { editExistingAsset } from "../../../services/Api.js";
-import { FormControl } from "../../../components/FormControl";
+import { FormControl } from "../../FormControl";
 import { Link } from "react-router-dom";
 
-const AssetDetails = ({ history, match }) => {
+const EditAsset = ({ history, match }) => {
   const user = useSelector(({ auth: { user } }) => user);
   const [validated, setValidated] = useState(false);
   const [assetId, setAssetId] = useState("");
@@ -148,4 +148,4 @@ const AssetDetails = ({ history, match }) => {
   );
 };
 
-export default AssetDetails;
+export default EditAsset;
