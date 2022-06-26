@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const CreateAsset = props => {
   const [validated, setValidated] = useState(false);
   const [assetName, setAssetName] = useState("");
-  const [assetDescription, setUserEmail] = useState("");
+  const [assetDescription, setDescription] = useState("");
   const [assetType, setAssetType] = useState("");
 
   const createAsset = async props => {
@@ -37,9 +37,9 @@ const CreateAsset = props => {
     const { name, value } = event.target;
 
     let actions = {
-      "nome": setAssetName,
-      "descricao": setUserEmail,
-      "tipo": setAssetType
+      "name": setAssetName,
+      "description": setDescription,
+      "type": setAssetType
     };
 
     actions[name](value);
@@ -66,7 +66,7 @@ const CreateAsset = props => {
                 value={assetName}
                 onChange={handleChange}
                 autoFocus="true"
-                name="nome"
+                name="name"
                 goodFeedback="Nome válido!"
                 badFeedback="Nome inválido!"
               />
@@ -79,7 +79,7 @@ const CreateAsset = props => {
                 value={assetDescription}
                 onChange={handleChange}
                 autoFocus="false"
-                name="descricao"
+                name="description"
                 goodFeedback="Descrição válida!"
                 badFeedback="Descrição inválida!"
               />
@@ -91,7 +91,7 @@ const CreateAsset = props => {
                 placeholder="-"
                 value={assetType}
                 onChange={handleChange}
-                name="tipo"
+                name="type"
                 goodFeedback="Tipo válido!"
                 badFeedback="Tipo inválido!"
               />

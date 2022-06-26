@@ -98,6 +98,19 @@ const createNewAsset = async (name, type, description) => {
   }
 };
 
+const editExistingAsset = async (id, name, type, description) => {
+  //let config = getConfig({});
+  try {
+    //const payLoad = `{"id": "${id}","name": "${name}","type": "${type}","description": "${description}"}`;
+    //await API.post(`/assets`, payLoad, config); 
+    console.log(`Ativo alterado. ID: ${id}, Nome: ${name}, Tipo: ${type}, Descrição: ${description}`);   
+    return true;
+  } catch (error) {
+    console.log("Erro ao alterar ativo: ", error);
+    return false;
+  }
+};
+
 const getAssets = async (load, user) => {
   //let config = getConfig(user);
   try {
@@ -175,6 +188,7 @@ export {
   getUserById,
   loginUser,
   createNewAsset,
+  editExistingAsset,
   getAssets,
   getAssetById,
   deleteAsset 
