@@ -35,6 +35,7 @@ const Routes = () => (
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
       <Route exact path="/createasset" component={CreateAsset}></Route>
+      <PrivateRoute exact path="/details/managemaintenance/:id" component={CreateAsset}></PrivateRoute>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>      
     </Switch>
   </>

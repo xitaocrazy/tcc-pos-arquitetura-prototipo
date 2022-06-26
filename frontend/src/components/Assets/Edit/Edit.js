@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import { editExistingAsset } from "../../../services/Api.js";
 import { FormControl } from "../../FormControl";
 import { assetTypes } from "../../../utils/index";
-import { List } from "../../MaintenanceProcedures/List";
+import { List as ListMaintenanceProcedures } from "../../MaintenanceProcedures/List";
+import { List as ListMaintenanceHistory } from "../../MaintenanceHistory/List";
 import SelectedList from "../../General/SelectedList";
 
 const EditAsset = ({ history, match }) => {
@@ -146,9 +147,16 @@ const EditAsset = ({ history, match }) => {
           <Card style={cardSize}>
             <Card.Header>Procedimentos de Manutenção</Card.Header>
             <Card.Body>              
-              <List history={history} assetId={assetId} assetType={assetType} isMaintenanceManagement={false}/>
+              <ListMaintenanceProcedures history={history} assetId={assetId} assetType={assetType} isMaintenanceManagement={false}/>
             </Card.Body>
-          </Card>          
+          </Card>  
+          <br></br>
+          <Card style={cardSize}>
+            <Card.Header>Histórico de Manutenção</Card.Header>
+            <Card.Body>              
+              <ListMaintenanceHistory history={history} assetId={assetId}/>
+            </Card.Body>
+          </Card>         
         </div>      
       )}
     </div>

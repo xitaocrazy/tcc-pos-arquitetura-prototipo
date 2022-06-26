@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ButtonGroup, Card, Form, Button } from "react-bootstrap";
 import { createNewAsset } from "../../../services/Api.js";
 import { FormControl } from "../../../components/FormControl";
-import { Link } from "react-router-dom";
 import { assetTypes } from "../../../utils/index"
 import SelectedList from "../../General/SelectedList";
 import { BackToHome } from "../../BackToHome";

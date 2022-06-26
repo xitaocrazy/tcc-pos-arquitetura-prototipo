@@ -41,22 +41,7 @@ export const assetsList = [
       id: 1,
       description: "Alimentador Vibratório"
     },
-    description: "BR AV 25 050 Cap. alimentação 10 a 80 m³/h mototr 1 x 5 CV",
-    maintenanceProcedures: {
-      count: 2,
-      items: [
-        {
-          type: 1,
-          last: "2022-06-01'T'14:00:00",
-          next: "2022-06-15'T'14:00:00"
-        },
-        {
-          type: 1,
-          last: "2022-06-04'T'14:00:00",
-          next: undefined
-        }
-      ]
-    }    
+    description: "BR AV 25 050 Cap. alimentação 10 a 80 m³/h mototr 1 x 5 CV",   
   },
   {
     _id: 2,
@@ -65,17 +50,7 @@ export const assetsList = [
       id: 2,
       description: "Britador de Mandíbula"
     },
-    description: "BR 5030. Cap. alimentação 12 a 15 m³/h 30CV",
-    maintenanceProcedures: {
-      count: 1,
-      items: [
-        {
-          type: 3,
-          last: "2022-06-01'T'14:00:00",
-          next: "2022-06-15'T'14:00:00"
-        }
-      ]
-    }
+    description: "BR 5030. Cap. alimentação 12 a 15 m³/h 30CV"
   }
 ];
 
@@ -113,5 +88,29 @@ export const maintenanceProcedures = [
       type: 2,
       description: "Quinzenal"
     }
+  }
+];
+
+export const maintenanceHistory = [
+  {
+    _id: 1,
+    scheduledTo: "2022-04-23T18:00:00",
+    realizedAt: "2022-04-23T18:00:00",
+    assetId: 1,
+    maintenanceProcedure: maintenanceProcedures.find(m => m._id === 1)
+  },
+  {
+    _id: 2,
+    scheduledTo: "2022-07-23T18:00:00",
+    realizedAt: null,
+    assetId: 1,
+    maintenanceProcedure: maintenanceProcedures.find(m => m._id === 2)
+  },
+  {
+    _id: 3,
+    scheduledTo: "2022-04-23T18:00:00",
+    realizedAt: "2022-04-23T18:00:00",
+    assetId: 2,
+    maintenanceProcedure: maintenanceProcedures.find(m => m._id === 3)
   }
 ];

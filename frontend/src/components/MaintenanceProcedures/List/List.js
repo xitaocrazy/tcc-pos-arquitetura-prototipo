@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import { getAssetMaintenanceProcedures } from "../../../services/Api";
+import { getMaintenanceProcedures } from "../../../services/Api";
 import { useDispatch } from "react-redux";
 import { Creators as Actions } from "../../../store/ducks/maintenanceProcedure";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ const List = props => {
   };
 
   const getListMaintenanceProcedures = async () => {    
-    await getAssetMaintenanceProcedures(setMaintenanceProcedures, props.assetId, props.assetType, user);
+    await getMaintenanceProcedures(setMaintenanceProcedures, props.assetId, props.assetType, user);
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { assetsList, maintenanceProcedures } from "../utils/index";
+import { assetsList, maintenanceProcedures, maintenanceHistory } from "../utils/index";
 
 const INVALID_EMAIL = "invalidemail@gmail.com";
 const EMAIL = "xitaocrazy@hotmail.com";
@@ -122,7 +122,7 @@ const deleteAsset = async (id, user) => {
   }
 };
 
-const getAssetMaintenanceProcedures = async (load, assetId, assetType, user) => {
+const getMaintenanceProcedures = async (load, assetId, assetType, user) => {
   //let config = getConfig(user);
   try {
     //const { data } = await API.get(`/maintenanceprocedures?assetId=${assetId}&assetType=${assetType}`, config);
@@ -151,6 +151,20 @@ const deleteMaintenanceProcedure = async (id, user) => {
   }
 };
 
+const getMaintenanceHistory = async (load, assetId, user) => {
+  //let config = getConfig(user);
+  try {
+    //const { data } = await API.get(`/maintenanceprocedures?assetId=${assetId}&assetType=${assetType}`, config);
+    console.log(`Buscando histórico de procedimentos de manutenção do ativo. AssetId: ${assetId}`);
+    let data = maintenanceHistory.filter(a => a.assetId + '' === assetId + '');
+    load(data);
+    return data;
+  } catch (error) {
+    console.log("Erro ao buscar histórico dos procedimentos de manutenção do ativo: ", error);
+    return [];
+  }
+};
+
 export {     
   loginUser,
   createNewAsset,
@@ -158,6 +172,7 @@ export {
   getAssets,
   getAssetById,
   deleteAsset,
-  getAssetMaintenanceProcedures,
-  deleteMaintenanceProcedure
+  getMaintenanceProcedures,
+  deleteMaintenanceProcedure,
+  getMaintenanceHistory
 };
