@@ -24,7 +24,6 @@ const Item = props => {
   };
 
   const goToMaintenanceProcedurePage = () => {
-    console.log(props.item)
     props.history.push(`./managemaintenance/${props.item._id}`);    
   };
 

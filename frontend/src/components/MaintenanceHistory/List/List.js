@@ -24,7 +24,7 @@ const List = props => {
 
   return (
     <div className="m-3 p-2 px-md-4 px-xl-4">
-      <HeaderList history={props.history}/>
+      <HeaderList history={props.history} assetId={props.assetId} assetName={props.assetName}/>
       <Items history={props.history}/>
     </div>
   );

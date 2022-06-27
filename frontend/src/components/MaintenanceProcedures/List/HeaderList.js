@@ -13,14 +13,14 @@ const HeaderList = props => (
       </div>
       <div className="d-flex flex-row pb-2 justify-content-between">
         <div className="p2 col-example d-flex flex-row">
-          <Operations history={props.history}/>
+          <Operations history={props.history} assetId={props.assetId} assetName={props.assetName}/>
         </div>
       </div>
     </MobileView>
     <BrowserView>
       <div className="d-flex flex-column flex-lg-row flex-xl-row align-items-center justify-content-between">
         <div className="p2 col-example d-flex flex-row mb-3">
-          <Operations history={props.history}/>
+          <Operations history={props.history} assetId={props.assetId} assetName={props.assetName}/>
         </div>
         <div className="p2 d-flex flex-column flex-md-row pb-3">
           <div>

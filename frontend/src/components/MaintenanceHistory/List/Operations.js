@@ -16,7 +16,7 @@ const Operations = props => {
   const confirmAction = text => window.confirm(text);
 
   const addMaintenanceHistory = () => {
-    props.history.push(`./addmaintenancehistory`);
+    props.history.push(`./addmaintenancehistory/${props.assetId}`);
   };
 
   const deleteSelected = () => {

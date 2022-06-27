@@ -54,8 +54,8 @@ const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
   }
 };
 
-const createNewAsset = async (name, type, description) => {
-  //let config = getConfig({});
+const createNewAsset = async (name, type, description, user) => {
+  //let config = getConfig(user);
   try {
     //const payLoad = `{"name": "${name}","type": "${type}","description": "${description}"}`;
     //await API.post(`/assets`, payLoad, config); 
@@ -122,6 +122,19 @@ const deleteAsset = async (id, user) => {
   }
 };
 
+const createNewMaintenanceProcedure = async (name, description, assetType, assetId, reccurencyId, user) => {
+  //let config = getConfig(user);
+  try {
+    //const payLoad = `{"name": "${name}","description": "${description}","assetType": "${assetType},"assetId": "${assetId},"reccurencyId": "${reccurencyId}"}`;
+    //await API.post(`/maintenanceprocedures`, payLoad, config); 
+    console.log(`Novo procedimento de manutenção cadastrado. Nome: ${name}, Descrição: ${description}, Tipo de Ativo: ${assetType}, Id do Ativo: ${assetId}, Recorrência: ${reccurencyId}`);   
+    return true;
+  } catch (error) {
+    console.log("Erro ao cadastrar novo procedimento de manutenção: ", error);
+    return false;
+  }
+};
+
 const getMaintenanceProcedures = async (load, assetId, assetType, user) => {
   //let config = getConfig(user);
   try {
@@ -147,6 +160,19 @@ const deleteMaintenanceProcedure = async (id, user) => {
     return true;
   } catch (error) {
     console.log("Erro ao deletar o procedimento de manutenção: ", error);
+    return false;
+  }
+};
+
+const createNewMaintenanceHistory = async (assetId, scheduledTo, maintenanceProcedureId) => {
+  //let config = getConfig(user);
+  try {
+    //const payLoad = `{"assetId": "${assetId}, "scheduledTo": "${scheduledTo}, "maintenanceProcedureId": "${maintenanceProcedureId}}`;
+    //await API.post(`/maintenancehistory`, payLoad, config); 
+    console.log(`Novo procedimento de manutenção agendado. Id do Ativo: ${assetId}, Agendado para: ${scheduledTo}, Id do Procedimento: ${maintenanceProcedureId}`);   
+    return true;
+  } catch (error) {
+    console.log("Erro ao agendar novo procedimento de manutenção: ", error);
     return false;
   }
 };
@@ -187,8 +213,10 @@ export {
   getAssets,
   getAssetById,
   deleteAsset,
+  createNewMaintenanceProcedure,
   getMaintenanceProcedures,
   deleteMaintenanceProcedure,
+  createNewMaintenanceHistory,
   getMaintenanceHistory,
   deleteMaintenanceHistory
 };

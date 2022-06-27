@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ButtonGroup, Card, Form, Button } from "react-bootstrap";
-import { createNewAsset } from "../../../services/Api.js";
-import { FormControl } from "../../../components/FormControl";
+import { createNewMaintenanceProcedure } from "../../../services/Api.js";
+import { FormControl } from "../../FormControl";
 import { assetTypes } from "../../../utils/index"
 import SelectedList from "../../General/SelectedList";
 import { BackToHome } from "../../BackToHome";
@@ -10,16 +10,26 @@ import { useSelector } from "react-redux";
 const CreateAsset = props => {
   const user = useSelector(({ auth: { user } }) => user);
   const [validated, setValidated] = useState(false);
-  const [assetName, setAssetName] = useState("");
-  const [assetDescription, setDescription] = useState("");
-  const [assetType, setAssetType] = useState(0);
+  const [maintenanceProcedureName, setMaintenanceProcedureName] = useState("");
+  const [maintenanceProcedureDescription, setMaintenanceProcedureDescription] = useState("");
+  const [assetType, setAssetType] = useState(null);
+  const [assetId, setAssetId] = useState(null);
+  const [assetdescription, setAssetDescription] = useState("");
+  const [recurrencyID, setRecurrencyID] = useState(1);
 
+  useEffect(() => {
+    if (props.assetID){
+      setAssetId(props.assetID);
+      setAssetDescription(props.assetdescription);
+    }
+  });
+  
   const changeType = assetType => setAssetType(assetType);
 
-  const createAsset = async props => {
-    if (await createNewAsset(assetName, assetType, assetDescription, user)) {
-        redirect();
-      }    
+  const createMaintenanceProcedure = async props => {
+    if (await createNewMaintenanceProcedure(maintenanceProcedureName, maintenanceProcedureDescription, assetType, assetId, recurrencyID, user)) {
+      redirect();
+    }    
   };
 
   const redirect = () => {
@@ -35,7 +45,7 @@ const CreateAsset = props => {
       return;
     }
     setValidated(true);
-    createAsset();
+    createMaintenanceProcedure();
   };
 
   const handleChange = event => {
@@ -43,8 +53,10 @@ const CreateAsset = props => {
     const { name, value } = event.target;
 
     let actions = {
-      "name": setAssetName,
-      "description": setDescription
+      "name": setMaintenanceProcedureName,
+      "description": setMaintenanceProcedureDescription,
+      "asset": setAssetId,
+      "recurrency": setRecurrencyID
     };
 
     actions[name](value);
@@ -62,20 +74,33 @@ const CreateAsset = props => {
       </ButtonGroup>
       <div className="mb-3 justify-content-center align-items-center">
         <Card style={cardSize}>
-          <Card.Header>Novo Ativo</Card.Header>
+          <Card.Header>Novo Procedimento de Manutenção</Card.Header>
           <Card.Body>           
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-              <Form.Row>
-                <Form.Group controlId="tipoValidation">
-                  <Form.Label>Tipo</Form.Label>                    
-                  <SelectedList
-                    title="Tipo de ativo"
-                    options={assetTypes}
-                    handleChange={changeType}
-                    classname="p2 pr-1"
+              {assetdescription ? (
+                <Form.Row>
+                  <FormControl
+                    label="Ativo"
+                    type="text"
+                    placeholder="-"
+                    value={assetdescription}
+                    name="asset"
+                    readOnly="true"
                   />
-                </Form.Group>                    
-              </Form.Row>
+                </Form.Row>                
+              ) : (
+                <Form.Row>
+                  <Form.Group controlId="tipoValidation">
+                    <Form.Label>Tipo de ativo</Form.Label>                    
+                    <SelectedList
+                      title="Tipo de ativo"
+                      options={assetTypes}
+                      handleChange={changeType}
+                      classname="p2 pr-1"
+                    />
+                  </Form.Group>                    
+                </Form.Row>
+              )};
               <FormControl
                 controlId="nomeValidation"
                 label="Nome"
