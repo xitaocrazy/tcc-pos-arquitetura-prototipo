@@ -1,4 +1,7 @@
 export const formatDate = dateString => {
+  if (!dateString){
+    return "";
+  }
   const date = dateString && new Date(dateString);
   const day =
     date &&
@@ -51,6 +54,21 @@ export const assetsList = [
       description: "Britador de Mandíbula"
     },
     description: "BR 5030. Cap. alimentação 12 a 15 m³/h 30CV"
+  }
+];
+
+export const recurrencyTypes = [
+  {
+    Description: "Não recorrente",
+    Value: "1"
+  },
+  {
+    Description: "Quinzenal",
+    Value: "2"
+  },
+  {
+    Description: "Mensal",
+    Value: "3"
   }
 ];
 

@@ -17,7 +17,11 @@ const Items = props => {
 
   useEffect(() => {
     filteredMaintenanceHistory.forEach(item => {
-      item.selected = selectAll;      
+      if (!item.realizedAt){
+        item.selected = selectAll;
+      } else {
+        item.selected = false;
+      }      
     });
     let items = filteredMaintenanceHistory.filter(e => e);
     dispatch(Actions.updateFilteredMaintenanceHistory(items));

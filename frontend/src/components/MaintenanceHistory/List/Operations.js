@@ -9,7 +9,7 @@ import { isMobile } from "react-device-detect";
 import { Button } from "react-bootstrap";
 
 const Operations = props => { 
-  const filteredMaintenanceHistory = useSelector(({ maintenanceProcedure: { filteredMaintenanceHistory } }) => filteredMaintenanceHistory); 
+  const filteredMaintenanceHistory = useSelector(({ maintenanceHistory: { filteredMaintenanceHistory } }) => filteredMaintenanceHistory); 
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
 

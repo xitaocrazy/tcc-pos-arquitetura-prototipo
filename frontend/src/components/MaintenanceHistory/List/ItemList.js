@@ -11,8 +11,12 @@ const Item = props => {
 
   const setSelected = key => {
     filteredMaintenanceHistory.forEach(item => {      
-      if (item._id === key) {
-        item.selected = !item.selected;        
+      if (item._id === key) {        
+        if (!item.realizedAt){
+          item.selected = !item.selected;
+        } else {
+          item.selected = false;
+        }                
       };
     });
     let items = filteredMaintenanceHistory.filter(e => e);
@@ -24,7 +28,7 @@ const Item = props => {
   };
 
   const goToMaintenanceProcedurePage = () => {
-    props.history.push(`./managemaintenance/${props.item._id}`);    
+    //props.history.push(`./managemaintenance/${props.item._id}`);    
   };
 
   return (
@@ -43,7 +47,7 @@ const Item = props => {
         <div>{props.item.maintenanceProcedure.description}</div>
       </td>
       <td onClick={goToMaintenanceProcedurePage}>{formatDate(props.item.scheduledTo)}</td>
-      <td onClick={goToMaintenanceProcedurePage}>{formatDate(props.item.scheduledTo)}</td>
+      <td onClick={goToMaintenanceProcedurePage}>{formatDate(props.item.realizedAt)}</td>
     </tr>
   );
 };

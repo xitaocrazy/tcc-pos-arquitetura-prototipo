@@ -28,7 +28,7 @@ const Item = props => {
 
   const goToMaintenanceProcedurePage = () => {
     if (props.isMaintenanceManagement) {
-      props.history.push(`./details/${props.item._id}`);
+      props.history.push(`./maintenancedetails/${props.item._id}`);
     }    
   };
 

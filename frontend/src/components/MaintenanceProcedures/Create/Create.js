@@ -1,30 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Card, Form, Button } from "react-bootstrap";
-import { createNewMaintenanceProcedure } from "../../../services/Api.js";
+import { createNewMaintenanceProcedure, getAssetById } from "../../../services/Api.js";
 import { FormControl } from "../../FormControl";
-import { assetTypes } from "../../../utils/index"
+import { Loading } from "../../Loading";
+import { assetTypes, recurrencyTypes } from "../../../utils/index"
 import SelectedList from "../../General/SelectedList";
 import { BackToHome } from "../../BackToHome";
 import { useSelector } from "react-redux";
 
-const CreateAsset = props => {
+const CreateMaintenanceProcedure = ({ history, match }) => {
   const user = useSelector(({ auth: { user } }) => user);
   const [validated, setValidated] = useState(false);
+  const [assetId, setAssetId] = useState(match.params.id);
+  const [assetName, setAssetName] = useState(""); 
+  const [assetType, setAssetType] = useState(null); 
   const [maintenanceProcedureName, setMaintenanceProcedureName] = useState("");
-  const [maintenanceProcedureDescription, setMaintenanceProcedureDescription] = useState("");
-  const [assetType, setAssetType] = useState(null);
-  const [assetId, setAssetId] = useState(null);
-  const [assetdescription, setAssetDescription] = useState("");
+  const [maintenanceProcedureDescription, setMaintenanceProcedureDescription] = useState("");  
   const [recurrencyID, setRecurrencyID] = useState(1);
+  const [isToAsset, setIsToAsset] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getData = async () => {
+    setIsLoading(true);
+    let asset = await getAssetById(match.params.id, user);
+    if (!asset || asset.length === 0) {
+      redirect();
+    } 
+    setAssetId(asset._id);    
+    setAssetName(asset.name);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    if (props.assetID){
-      setAssetId(props.assetID);
-      setAssetDescription(props.assetdescription);
+    if (match.params.id){
+      getData();
+      setIsToAsset(true);
     }
-  });
+  }, []);//eslint-disable-line
   
   const changeType = assetType => setAssetType(assetType);
+  const changeRecurrency = recurrencyID => setRecurrencyID(recurrencyID);
 
   const createMaintenanceProcedure = async props => {
     if (await createNewMaintenanceProcedure(maintenanceProcedureName, maintenanceProcedureDescription, assetType, assetId, recurrencyID, user)) {
@@ -33,7 +48,7 @@ const CreateAsset = props => {
   };
 
   const redirect = () => {
-    props.history.push("/");
+    history.push("/");
   };
 
   const handleSubmit = event => {
@@ -55,7 +70,6 @@ const CreateAsset = props => {
     let actions = {
       "name": setMaintenanceProcedureName,
       "description": setMaintenanceProcedureDescription,
-      "asset": setAssetId,
       "recurrency": setRecurrencyID
     };
 
@@ -70,27 +84,30 @@ const CreateAsset = props => {
   return (
     <div className="m-3 p-4">
       <ButtonGroup className="mb-3">
-        <BackToHome history={props.history} message="Voltar para lista" />
+        <BackToHome history={history} message="Voltar para lista" />
       </ButtonGroup>
+      {isLoading ? (
+        <Loading />
+      ) : (
       <div className="mb-3 justify-content-center align-items-center">
         <Card style={cardSize}>
           <Card.Header>Novo Procedimento de Manutenção</Card.Header>
           <Card.Body>           
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-              {assetdescription ? (
+              {isToAsset ? (
                 <Form.Row>
                   <FormControl
                     label="Ativo"
                     type="text"
                     placeholder="-"
-                    value={assetdescription}
+                    value={assetName}
                     name="asset"
                     readOnly="true"
                   />
                 </Form.Row>                
               ) : (
                 <Form.Row>
-                  <Form.Group controlId="tipoValidation">
+                  <Form.Group controlId="typeValidation">
                     <Form.Label>Tipo de ativo</Form.Label>                    
                     <SelectedList
                       title="Tipo de ativo"
@@ -100,14 +117,14 @@ const CreateAsset = props => {
                     />
                   </Form.Group>                    
                 </Form.Row>
-              )};
+              )}
               <FormControl
                 controlId="nomeValidation"
                 label="Nome"
                 required="true"
                 type="text"
                 placeholder="Nome"
-                value={assetName}
+                value={maintenanceProcedureName}
                 onChange={handleChange}
                 autoFocus="true"
                 name="name"
@@ -120,13 +137,24 @@ const CreateAsset = props => {
                 required="true"
                 type="text"
                 placeholder="Detalhes do ativo"
-                value={assetDescription}
+                value={maintenanceProcedureDescription}
                 onChange={handleChange}
                 autoFocus="false"
                 name="description"
                 goodFeedback="Descrição válida!"
                 badFeedback="Descrição inválida!"
-              />                   
+              />  
+              <Form.Row>
+                <Form.Group controlId="recurrencyValidation">
+                  <Form.Label>Recorrência</Form.Label>                    
+                  <SelectedList
+                    title="Recorrência"
+                    options={recurrencyTypes}
+                    handleChange={changeRecurrency}
+                    classname="p2 pr-1"
+                  />
+                </Form.Group>                    
+              </Form.Row>                 
               <div className="d-flex justify-content-between align-items-end">
                 <Button type="submit">Salvar</Button>
               </div>
@@ -134,8 +162,9 @@ const CreateAsset = props => {
           </Card.Body>
         </Card>
       </div>
+      )}
     </div>    
   );
 };
 
-export default CreateAsset;
+export default CreateMaintenanceProcedure;
