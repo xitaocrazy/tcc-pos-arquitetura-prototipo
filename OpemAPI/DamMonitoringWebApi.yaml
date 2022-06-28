@@ -1,0 +1,379 @@
+swagger: "2.0"
+info:
+  description: "Interface da API pra envio de dados de barragens"
+  version: "1.0.0"
+  title: "DamMonitoringWebApi"
+  contact:
+    email: "xitaocrazy@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/v2"
+tags:
+- name: "events"
+  description: "Gerenciamento de eventos vindos de sensores"
+- name: "inspections"
+  description: "Gerenciamento de eventos vindos de inspeções feitas por consultores"
+schemes:
+- "https"
+- "http"
+paths:
+  /events:
+    post:
+      tags:
+      - "events"
+      summary: "Registro de evento"
+      description: ""
+      operationId: "addEvent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do evento que deve ser registrado"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - dam_monitoring_auth:
+        - "write:events"
+        - "read:events"
+    put:
+      tags:
+      - "events"
+      summary: "Atualiza os dados de um evento"
+      description: ""
+      operationId: "updateEvent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do evento que deve ser registrado"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+        "400":
+          description: "Dados inválidos"
+        "404":
+          description: "Evento não encontrado"
+      security:
+      - dam_monitoring_auth:
+        - "write:events"
+        - "read:events"
+  /events/dam/{damId}/findBySensor:
+    get:
+      tags:
+      - "events"
+      summary: "Busca os eventos de um sensor enviados para uma barragem"
+      description: "Deve ser informado o identificador da barrageme o identificador do sensor"
+      operationId: "findDamEventsBySensor"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "damId"
+        in: "path"
+        description: "Identificador da barragem"
+        required: true
+        type: "string"
+      - name: "sensorId"
+        in: "query"
+        description: "Identificador do sensor"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - dam_monitoring_auth:
+        - "write:events"
+        - "read:events"
+  /events/{eventId}:
+    get:
+      tags:
+      - "events"
+      summary: "Busca um evento pelo identificador"
+      description: ""
+      operationId: "getEventById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "Identificador do evento"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+          schema:
+            $ref: "#/definitions/Event"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - dam_monitoring_auth:
+        - "write:events"
+        - "read:events"
+    delete:
+      tags:
+      - "events"
+      summary: "Deleta um evento"
+      description: ""
+      operationId: "deletEevent"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "Identificador do evento"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Dados inválidos"
+        "404":
+          description: "Evento não encontrado"
+      security:
+      - dam_monitoring_auth:
+        - "write:events"
+        - "read:events"
+  /inspections:
+    post:
+      tags:
+      - "inspections"
+      summary: "Registro de uma inspeção"
+      description: ""
+      operationId: "addInspection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados da inspeção que deve ser registrada"
+        required: true
+        schema:
+          $ref: "#/definitions/Inspection"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - dam_monitoring_auth:
+        - "write:inspections"
+        - "read:inspections"
+    put:
+      tags:
+      - "inspections"
+      summary: "Atualiza os dados de uma inspeção"
+      description: ""
+      operationId: "updateInspection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados da inspeção que deve ser registrada"
+        required: true
+        schema:
+          $ref: "#/definitions/Inspection"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+        "400":
+          description: "Dados inválidos"
+        "404":
+          description: "Evento não encontrado"
+      security:
+      - dam_monitoring_auth:
+        - "write:inspections"
+        - "read:inspections"
+  /inspections/dam/{damId}/findByConsultant:
+    get:
+      tags:
+      - "inspections"
+      summary: "Busca as inspeções de um consultor enviados para uma barragem"
+      description: "Deve ser informado o identificador da barrageme o identificador do consultor"
+      operationId: "findDamInspectionsByConsultant"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "damId"
+        in: "path"
+        description: "Identificador da barragem"
+        required: true
+        type: "string"
+      - name: "consultantId"
+        in: "query"
+        description: "Identificador do consultor"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Inspection"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - dam_monitoring_auth:
+        - "write:inspections"
+        - "read:inspections"
+  /inspections/{inspectionId}:
+    get:
+      tags:
+      - "inspections"
+      summary: "Busca uma inspeção pelo identificador"
+      description: ""
+      operationId: "getInspectionById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "inspectionId"
+        in: "path"
+        description: "Identificador da inspeção"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+          schema:
+            $ref: "#/definitions/Inspection"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - dam_monitoring_auth:
+        - "write:inspections"
+        - "read:inspections"
+    delete:
+      tags:
+      - "inspections"
+      summary: "Deleta uma inspeção"
+      description: ""
+      operationId: "deleteInspection"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "inspectionId"
+        in: "path"
+        description: "Identificador da inspeção"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Dados inválidos"
+        "404":
+          description: "Evento não encontrado"
+      security:
+      - dam_monitoring_auth:
+        - "write:inspections"
+        - "read:inspections"
+securityDefinitions:
+  dam_monitoring_auth:
+    type: "oauth2"
+    authorizationUrl: "http://myidp/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:events: "Permite modificar dados de eventos"
+      read:events: "Permite ler dados de eventos"
+      write:inspections: "Permite modificar dados de inspeções"
+      read:inspections: "Permite ler dados de inspeções"
+definitions:
+  Event:
+    type: "object"
+    required:
+    - "value"
+    - "type"
+    properties:
+      id:
+        type: "string"
+      dam:
+        $ref: "#/definitions/Dam"
+      sensor:
+        $ref: "#/definitions/Sensor"
+      type:
+        $ref: "#/definitions/Type"
+      value:
+        type: "integer"
+        format: "int64"
+      dateTime:
+        type: "string"
+        format: "date-time"
+        description: "Data e hora da ocorrência"
+    xml:
+      name: "Event"
+  Type:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "Piezometria"
+    xml:
+      name: "Type"
+  Dam:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Type"
+  Sensor:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Type"
+  Inspection:
+    type: "object"
+    required:
+    - "consultant"
+    - "data"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      consultant:
+        type: "string"
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/Event"
+    xml:
+      name: "Inspection"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
