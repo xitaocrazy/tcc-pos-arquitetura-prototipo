@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
-import { assetsList, maintenanceProcedures, maintenanceHistory } from "../utils/index";
+import { assetsList, maintenanceProcedures, MaintenanceOcurrency } from "../utils/index";
 
 const INVALID_EMAIL = "invalidemail@gmail.com";
 const EMAIL = "xitaocrazy@hotmail.com";
@@ -164,11 +164,11 @@ const deleteMaintenanceProcedure = async (id, user) => {
   }
 };
 
-const createNewMaintenanceHistory = async (assetId, scheduledTo, maintenanceProcedureId) => {
+const createNewMaintenanceOcurrency = async (assetId, scheduledTo, maintenanceProcedureId) => {
   //let config = getConfig(user);
   try {
     //const payLoad = `{"assetId": "${assetId}, "scheduledTo": "${scheduledTo}, "maintenanceProcedureId": "${maintenanceProcedureId}}`;
-    //await API.post(`/maintenancehistory`, payLoad, config); 
+    //await API.post(`/MaintenanceOcurrency`, payLoad, config); 
     console.log(`Novo procedimento de manutenção agendado. Id do Ativo: ${assetId}, Agendado para: ${scheduledTo}, Id do Procedimento: ${maintenanceProcedureId}`);   
     return true;
   } catch (error) {
@@ -177,12 +177,12 @@ const createNewMaintenanceHistory = async (assetId, scheduledTo, maintenanceProc
   }
 };
 
-const getMaintenanceHistory = async (load, assetId, user) => {
+const getMaintenanceOcurrency = async (load, assetId, user) => {
   //let config = getConfig(user);
   try {
-    //const { data } = await API.get(`/maintenancehistory?assetId=${assetId}`, config);
+    //const { data } = await API.get(`/MaintenanceOcurrency?assetId=${assetId}`, config);
     console.log(`Buscando histórico de procedimentos de manutenção do ativo. AssetId: ${assetId}`);
-    let data = maintenanceHistory.filter(a => a.assetId + '' === assetId + '');
+    let data = MaintenanceOcurrency.filter(a => a.assetId + '' === assetId + '');
     data.forEach(item => {
       item.selected = false;
     });
@@ -194,10 +194,10 @@ const getMaintenanceHistory = async (load, assetId, user) => {
   }
 };
 
-const deleteMaintenanceHistory = async (id, user) => {
+const deleteMaintenanceOcurrency = async (id, user) => {
   //let config = getConfig(user);
   try {
-    //await API.delete(`/maintenancehistory/${id}`, config);
+    //await API.delete(`/MaintenanceOcurrency/${id}`, config);
     console.log(`Manutenção agendada removida. ID: ${id}`); 
     return true;
   } catch (error) {
@@ -216,7 +216,7 @@ export {
   createNewMaintenanceProcedure,
   getMaintenanceProcedures,
   deleteMaintenanceProcedure,
-  createNewMaintenanceHistory,
-  getMaintenanceHistory,
-  deleteMaintenanceHistory
+  createNewMaintenanceOcurrency,
+  getMaintenanceOcurrency,
+  deleteMaintenanceOcurrency
 };

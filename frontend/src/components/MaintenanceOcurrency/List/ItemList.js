@@ -2,15 +2,15 @@ import React from "react";
 import { formatDate } from "../../../utils/index";
 import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { Creators as Actions } from "../../../store/ducks/maintenanceHistory";
+import { Creators as Actions } from "../../../store/ducks/maintenanceOcurrency";
 import { useSelector } from "react-redux";
 
 const Item = props => {
-  const filteredMaintenanceHistory = useSelector(({ maintenanceHistory: { filteredMaintenanceHistory } }) => filteredMaintenanceHistory);
+  const filteredMaintenanceOcurrency = useSelector(({ MaintenanceOcurrency: { filteredMaintenanceOcurrency } }) => filteredMaintenanceOcurrency);
   const dispatch = useDispatch()
 
   const setSelected = key => {
-    filteredMaintenanceHistory.forEach(item => {      
+    filteredMaintenanceOcurrency.forEach(item => {      
       if (item._id === key) {        
         if (!item.realizedAt){
           item.selected = !item.selected;
@@ -19,8 +19,8 @@ const Item = props => {
         }                
       };
     });
-    let items = filteredMaintenanceHistory.filter(e => e);
-    dispatch(Actions.updateFilteredMaintenanceHistory(items));
+    let items = filteredMaintenanceOcurrency.filter(e => e);
+    dispatch(Actions.updateFilteredMaintenanceOcurrency(items));
   };
 
   const handleChange = () => {

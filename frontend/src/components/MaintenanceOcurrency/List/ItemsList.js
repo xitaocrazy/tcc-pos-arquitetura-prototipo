@@ -2,29 +2,29 @@ import React, { useState, useEffect } from "react";
 import Item from "./ItemList";
 import { Table, Form, Pagination } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { Creators as Actions } from "../../../store/ducks/maintenanceHistory";
+import { Creators as Actions } from "../../../store/ducks/maintenanceOcurrency";
 import { useSelector } from "react-redux";
 
 const Items = props => {
-  const filteredMaintenanceHistory = useSelector(({ maintenanceHistory: { filteredMaintenanceHistory } }) => filteredMaintenanceHistory);
+  const filteredMaintenanceOcurrency = useSelector(({ MaintenanceOcurrency: { filteredMaintenanceOcurrency } }) => filteredMaintenanceOcurrency);
   const dispatch = useDispatch();
 
   const [selectAll, setSelectAll] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const [pages, setPages] = useState([]);
-  const [activePageMaintenanceHistory, setActivePageMaintenanceHistory] = useState([]);
+  const [activePageMaintenanceOcurrency, setActivePageMaintenanceOcurrency] = useState([]);
   const pageSize = 5;
 
   useEffect(() => {
-    filteredMaintenanceHistory.forEach(item => {
+    filteredMaintenanceOcurrency.forEach(item => {
       if (!item.realizedAt){
         item.selected = selectAll;
       } else {
         item.selected = false;
       }      
     });
-    let items = filteredMaintenanceHistory.filter(e => e);
-    dispatch(Actions.updateFilteredMaintenanceHistory(items));
+    let items = filteredMaintenanceOcurrency.filter(e => e);
+    dispatch(Actions.updateFilteredMaintenanceOcurrency(items));
   }, [selectAll]);//eslint-disable-line
 
   const handlePageChange = (event, page) => {
@@ -34,7 +34,7 @@ const Items = props => {
   };
 
   useEffect(() => {
-    var items = filteredMaintenanceHistory.length;
+    var items = filteredMaintenanceOcurrency.length;
     if (items <= pageSize) setActivePage(1);
     var pages = [];
     var quotient = Math.trunc(items / pageSize);
@@ -53,9 +53,9 @@ const Items = props => {
     }
     setPages(pages);
     var initial = (activePage - 1) * pageSize;
-    var pageAssets = filteredMaintenanceHistory.slice(initial, initial + pageSize);
-    setActivePageMaintenanceHistory(pageAssets);
-  }, [filteredMaintenanceHistory, activePage]);
+    var pageAssets = filteredMaintenanceOcurrency.slice(initial, initial + pageSize);
+    setActivePageMaintenanceOcurrency(pageAssets);
+  }, [filteredMaintenanceOcurrency, activePage]);
 
   return (
     <>
@@ -76,7 +76,7 @@ const Items = props => {
           </tr>
         </thead>
         <tbody style={{ cursor: "pointer" }}>
-          {activePageMaintenanceHistory.map((item, idx) => {
+          {activePageMaintenanceOcurrency.map((item, idx) => {
             return (
               <Item key={idx} item={item} idx={idx} history={props.history}/>
             );

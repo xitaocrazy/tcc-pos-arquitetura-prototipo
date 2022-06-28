@@ -8,7 +8,7 @@ import { editExistingAsset } from "../../../services/Api.js";
 import { FormControl } from "../../FormControl";
 import { assetTypes } from "../../../utils/index";
 import { List as ListMaintenanceProcedures } from "../../MaintenanceProcedures/List";
-import { List as ListMaintenanceHistory } from "../../MaintenanceHistory/List";
+import { List as ListMaintenanceOcurrency } from "../../MaintenanceOcurrency/List";
 import SelectedList from "../../General/SelectedList";
 
 const EditAsset = ({ history, match }) => {
@@ -152,9 +152,9 @@ const EditAsset = ({ history, match }) => {
           </Card>  
           <br></br>
           <Card style={cardSize}>
-            <Card.Header>Histórico de Manutenção</Card.Header>
+            <Card.Header>Manutenções Programadas</Card.Header>
             <Card.Body>              
-              <ListMaintenanceHistory history={history} assetId={assetId} assetName={assetName}/>
+              <ListMaintenanceOcurrency history={history} assetId={assetId} assetName={assetName}/>
             </Card.Body>
           </Card>         
         </div>      

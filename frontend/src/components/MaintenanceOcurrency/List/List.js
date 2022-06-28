@@ -1,25 +1,25 @@
 import React, { useEffect } from "react";
 import Items from "./ItemsList";
 import HeaderList from "./HeaderList";
-import { getMaintenanceHistory } from "../../../services/Api";
+import { getMaintenanceOcurrency } from "../../../services/Api";
 import { useDispatch } from "react-redux";
-import { Creators as Actions } from "../../../store/ducks/maintenanceHistory";
+import { Creators as Actions } from "../../../store/ducks/maintenanceOcurrency";
 import { useSelector } from "react-redux";
 
 const List = props => {
   const user = useSelector(({ auth: { user } }) => user);
   const dispatch = useDispatch();
 
-  const setMaintenanceHistory = (data) => {    
-    dispatch(Actions.setMaintenanceHistory(data));
+  const setMaintenanceOcurrency = (data) => {    
+    dispatch(Actions.setMaintenanceOcurrency(data));
   };
 
-  const getListMaintenanceHistory = async () => {    
-    await getMaintenanceHistory(setMaintenanceHistory, props.assetId, user);
+  const getListMaintenanceOcurrency = async () => {    
+    await getMaintenanceOcurrency(setMaintenanceOcurrency, props.assetId, user);
   };
 
   useEffect(() => {
-    getListMaintenanceHistory();
+    getListMaintenanceOcurrency();
   }, []); //eslint-disable-line
 
   return (

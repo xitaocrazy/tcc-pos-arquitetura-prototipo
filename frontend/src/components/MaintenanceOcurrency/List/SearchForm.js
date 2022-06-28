@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Creators as Actions } from "../../../store/ducks/maintenanceHistory";
+import { Creators as Actions } from "../../../store/ducks/maintenanceOcurrency";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,7 @@ import { Button, FormControl, Form } from "react-bootstrap";
 
 const SearchForm = () => {
 
-  const allMaintenanceHistory = useSelector(({ maintenanceHistory: { allMaintenanceHistory } }) => allMaintenanceHistory);
+  const allMaintenanceOcurrency = useSelector(({ MaintenanceOcurrency: { allMaintenanceOcurrency } }) => allMaintenanceOcurrency);
   const dispatch = useDispatch(); 
   
   const [filtro, setFiltro] = useState("");
@@ -17,16 +17,16 @@ const SearchForm = () => {
     let items = []
     if (filter) {
       const pattern = new RegExp(filter.trim(), "i");
-      items = allMaintenanceHistory.filter(item => {
+      items = allMaintenanceOcurrency.filter(item => {
         return (
           (item.maintenanceProcedure.scheduledTo.match(pattern)) ||
           (item.maintenanceProcedure.realizedAt.match(pattern)) ||
           (item.maintenanceProcedure.description.match(pattern))
         );
       });
-      dispatch(Actions.updateFilteredMaintenanceHistory(items));
+      dispatch(Actions.updateFilteredMaintenanceOcurrency(items));
     } else {
-      dispatch(Actions.updateFilteredMaintenanceHistory(allMaintenanceHistory));
+      dispatch(Actions.updateFilteredMaintenanceOcurrency(allMaintenanceOcurrency));
     }
   };
 

@@ -4,7 +4,7 @@ import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { EditAsset } from "../components/Assets/Edit";
 import { CreateAsset } from "../components/Assets/Create";
-import { CreateMaintenanceHistory } from "../components/MaintenanceHistory/Create";
+import { CreateMaintenanceOcurrency } from "../components/MaintenanceOcurrency/Create";
 import { CreateMaintenanceProcedure } from "../components/MaintenanceProcedures/Create";
 import { NotFound } from "../pages/NotFound";
 import { useSelector } from "react-redux";
@@ -39,8 +39,8 @@ const Routes = () => (
       <PrivateRoute exact path="/createasset" component={CreateAsset}></PrivateRoute>
       <PrivateRoute exact path="/details/maintenancedetails/:id" component={CreateMaintenanceProcedure}></PrivateRoute>
       <PrivateRoute exact path="/details/addmaintenanceprocedure/:id" component={CreateMaintenanceProcedure}></PrivateRoute>
-      <PrivateRoute exact path="/details/managemaintenance/:id" component={CreateMaintenanceHistory}></PrivateRoute>
-      <PrivateRoute exact path="/details/addmaintenancehistory/:id" component={CreateMaintenanceHistory}></PrivateRoute>
+      <PrivateRoute exact path="/details/managemaintenance/:id" component={CreateMaintenanceOcurrency}></PrivateRoute>
+      <PrivateRoute exact path="/details/addMaintenanceOcurrency/:id" component={CreateMaintenanceOcurrency}></PrivateRoute>
       <Route path="*" render={() => <Redirect to="/404" />}></Route>      
     </Switch>
   </>

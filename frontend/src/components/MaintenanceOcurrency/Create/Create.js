@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ButtonGroup, Card, Form, Button } from "react-bootstrap";
-import { createNewMaintenanceHistory, getAssetById, getMaintenanceProcedures } from "../../../services/Api.js";
+import { createNewMaintenanceOcurrency, getAssetById, getMaintenanceProcedures } from "../../../services/Api.js";
 import { FormControl } from "../../../components/FormControl";
 import { Loading } from "../../Loading";
 import SelectedList from "../../General/SelectedList";
@@ -8,7 +8,7 @@ import { BackToHome } from "../../BackToHome";
 import { useSelector, useDispatch } from "react-redux";
 import { Creators as Actions } from "../../../store/ducks/maintenanceProcedure";
 
-const CreateMaintenanceHistory = ({ history, match }) => {
+const CreateMaintenanceOcurrency = ({ history, match }) => {
   const user = useSelector(({ auth: { user } }) => user);
   const [validated, setValidated] = useState(false);
   const [assetId, setAssetId] = useState(match.params.id);
@@ -50,8 +50,8 @@ const CreateMaintenanceHistory = ({ history, match }) => {
     getData();
   }, []);//eslint-disable-line
 
-  const createMaintenanceHistory = async props => {
-    if (await createNewMaintenanceHistory(assetId, scheduledTo, maintenanceProcedureId, user)) {
+  const createMaintenanceOcurrency = async props => {
+    if (await createNewMaintenanceOcurrency(assetId, scheduledTo, maintenanceProcedureId, user)) {
         redirect();
       }    
   };
@@ -69,7 +69,7 @@ const CreateMaintenanceHistory = ({ history, match }) => {
       return;
     }
     setValidated(true);
-    createMaintenanceHistory();
+    createMaintenanceOcurrency();
   };
 
   const handleChange = event => {
@@ -138,4 +138,4 @@ const CreateMaintenanceHistory = ({ history, match }) => {
   );
 };
 
-export default CreateMaintenanceHistory;
+export default CreateMaintenanceOcurrency;

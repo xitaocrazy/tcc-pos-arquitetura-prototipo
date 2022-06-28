@@ -109,7 +109,7 @@ export const maintenanceProcedures = [
   }
 ];
 
-export const maintenanceHistory = [
+export const MaintenanceOcurrency = [
   {
     _id: 1,
     scheduledTo: "2022-04-23T18:00:00",
