@@ -1,14 +1,14 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-const BackToHome = ({ history, message }) => {
+const BackToHome = (props) => {
   const goToHomePage = () => {
-    history.push("/");
+    props.history.push(props.destiny || "/");
   };
 
   return (
     <Button variant="primary" onClick={goToHomePage}>
-      {message || "Voltar para Home"}
+      {props.message || "Voltar para Home"}
     </Button>
   );
 };

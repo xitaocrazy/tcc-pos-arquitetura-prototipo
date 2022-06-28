@@ -57,7 +57,7 @@ const CreateMaintenanceOcurrency = ({ history, match }) => {
   };
 
   const redirect = () => {
-    history.push("/");
+    history.push(`/details/${match.params.id}`);
   };
 
   const handleSubmit = event => {
@@ -86,14 +86,14 @@ const CreateMaintenanceOcurrency = ({ history, match }) => {
   return (
     <div className="m-3 p-4">
       <ButtonGroup className="mb-3">
-        <BackToHome history={history} message="Voltar para lista" />
+        <BackToHome history={history} message="Voltar para detalhes" destiny={`/details/${match.params.id}`} />
       </ButtonGroup>
       {isLoading ? (
         <Loading />
       ) : (
       <div className="mb-3 justify-content-center align-items-center">
         <Card style={cardSize}>
-          <Card.Header>Novo Ativo</Card.Header>
+          <Card.Header>Programar Manutenção</Card.Header>
           <Card.Body>           
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Form.Row>

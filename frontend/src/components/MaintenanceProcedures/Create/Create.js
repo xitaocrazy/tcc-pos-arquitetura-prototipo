@@ -48,7 +48,9 @@ const CreateMaintenanceProcedure = ({ history, match }) => {
   };
 
   const redirect = () => {
-    history.push("/");
+    if (match.params.id){
+      history.push(`/details/${match.params.id}`);
+    } //O else só será feito quando o cadastro de tipos for desenvolvido.  
   };
 
   const handleSubmit = event => {
@@ -84,7 +86,7 @@ const CreateMaintenanceProcedure = ({ history, match }) => {
   return (
     <div className="m-3 p-4">
       <ButtonGroup className="mb-3">
-        <BackToHome history={history} message="Voltar para lista" />
+        <BackToHome history={history} message="Voltar para detalhes" destiny={`/details/${match.params.id}`} />
       </ButtonGroup>
       {isLoading ? (
         <Loading />
