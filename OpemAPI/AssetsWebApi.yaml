@@ -1,0 +1,108 @@
+swagger: "2.0"
+info:
+  description: "Interface da API pra envio de dados de barragens"
+  version: "1.0.0"
+  title: "AssetsWebApi"
+  contact:
+    email: "xitaocrazy@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/v2"
+tags:
+- name: "assets"
+  description: "Gerenciamento de ativos"
+- name: "types"
+  description: "Gerenciamento de tipos de ativos"
+schemes:
+- "https"
+- "http"
+paths:
+  /assets:
+    post:
+      tags:
+      - "assets"
+      summary: "Registro de ativo"
+      description: ""
+      operationId: "addAsset"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do ativo que deve ser registrado"
+        required: true
+        schema:
+          $ref: "#/definitions/Asset"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - asset_monitoring_auth:
+        - "write:assets"
+        - "read:assets"
+  /assetTypes:
+    get:
+      tags:
+      - "types"
+      summary: "Busca uma lista de tipos de ativos"
+      description: ""
+      operationId: "getAssetTypes"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Operação realizada com sucesso"
+          schema:
+            $ref: "#/definitions/AssetType"
+        "400":
+          description: "Dados inválidos"
+      security:
+      - asset_monitoring_auth:
+        - "read:assetType"
+securityDefinitions:
+  asset_monitoring_auth:
+    type: "oauth2"
+    authorizationUrl: "http://myidp/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:assets: "Permite modificar dados de ativos"
+      read:assets: "Permite ler dados de ativos"
+      read:assetType: "Permite modificar dados de ativos"
+definitions:
+  Asset:
+    type: "object"
+    required:
+    - "type"
+    - "name"
+    - "description"
+    properties:
+      id:
+        type: "string"
+      type:
+        $ref: "#/definitions/AssetType"
+      name:
+        type: "string"
+        example: "Ativo 1"
+      description:
+        type: "string"
+        example: "BR AV 25 050 Cap. alimentação 10 a 80 m³/h mototr 1 x 5 CV"
+    xml:
+      name: "Asset"
+  AssetType:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      description:
+        type: "string"
+        example: "Britador de Mandíbula"
+    xml:
+      name: "AssetType"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
