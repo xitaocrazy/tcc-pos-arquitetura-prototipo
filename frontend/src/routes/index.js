@@ -30,7 +30,7 @@ const Routes = () => (
   <>
     <Switch>
       <PrivateRoute exact path="/" component={Home}></PrivateRoute>
-      <Route exact path="/details/login" render={() => <Redirect to="/login" />}></Route>
+      <Route exact path="/**/login" render={() => <Redirect to="/login" />}></Route>
       <PrivateRoute exact path="/details/:id" component={EditAsset}></PrivateRoute>
       <Route exact path="/404" component={NotFound}></Route>
       <Route exact path="/login" component={Login}></Route>
