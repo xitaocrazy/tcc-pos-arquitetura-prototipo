@@ -2,8 +2,8 @@ import axios from "axios";
 import { setupCache } from "axios-cache-adapter";
 import { assetsList, maintenanceProcedures, MaintenanceOcurrency } from "../utils/index";
 
-const INVALID_EMAIL = "invalidemail@gmail.com";
-const EMAIL = "xitaocrazy@hotmail.com";
+const EMAIL = "valid@email.com";
+const SENHA = "123456";
 const NAME =  "Daniel de Souza Martins";
 const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkRhbmllbCBkZSBTb3V6YSBNYXJ0aW5zIiwiaWF0IjoxNTE2MjM5MDIyLCJwcm9maWxlIjoiYWRtaW4ifQ.d4DFBAVnQyo_BMLhNn_n2vagocWfHhSW2SBHVI_I-bI";
 
@@ -35,7 +35,7 @@ const loginUser = async (email, password, setUserOnStorage, setUserLogedIn) => {
   try {
     //const payLoad = `{"email": "${email}","password": "${password}"}`;
     //const { data } = await API.post(`/sessions`, payLoad, config); 
-    if (email === INVALID_EMAIL) {
+    if (email !== EMAIL || password !== SENHA) {
       // eslint-disable-next-line no-throw-literal
       throw "Usuário não cadastrado";
     };

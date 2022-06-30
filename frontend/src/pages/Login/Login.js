@@ -39,6 +39,7 @@ const Login = props => {
   };
 
   const redirectToHome = () => {
+    console.clear();
     props.history.push("/");
   };
 
@@ -71,13 +72,17 @@ const Login = props => {
   };
 
   useEffect(() => {
-    //console.clear();
+    console.clear();  
+    if (props.location.state) {
+      console.log(`Usuário não logado. Redirecionado de ${JSON.stringify(props.location.state.from.pathname)} para /login`)
+    }  
     setUserFromStorage(SetUserLogedIn);
   }, []);//eslint-disable-line
-  // Desabilitado o eslint pois não vou ficar especificamente a função setUserFromStorage 
 
   useEffect(() => {
-    if (isAuth) redirectToHome();
+    if (isAuth) {
+      redirectToHome();
+    }     
   }, [isAuth]); //eslint-disable-line
 
   const cardSize = {
